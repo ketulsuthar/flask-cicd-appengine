@@ -52,15 +52,16 @@ jobs:
               docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
               docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
 
-        - name: Deploy
-          uses: google-github-actions/deploy-appengine@v1
-          with:
-            deliverables: 'app.yaml'
-            project_id: ${{ secrets.GCP_PROJECT_ID }}
+        # - name: Deploy
+        #   uses: google-github-actions/deploy-appengine@v1
+        #   with:
+        #     deliverables: 'app.yaml'
+        #     project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-        # - name: Deploy to App Engine
-        #   env:
-        #     GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
-        #   run: |
-        #     echo "GIT_TAG=$GIT_TAG"
-        #     gcloud app deploy app.yaml --image-url=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:$GIT_TAG --quiet
+        - name: Deploy to App Engine
+          env:
+            GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+          run: |
+            echo "GIT_TAG=$GIT_TAG"
+            gcloud app deploy app.yaml 
+        # --image-url=gcr.io/${{ secrets.GCP_PROJECT_ID }}/$IMAGE_NAME:$GIT_TAG --quiet
