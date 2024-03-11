@@ -1,4 +1,7 @@
 runtime: custom
+
+service: flask-cicd
+
 env: flex
 
 manual_scaling:
