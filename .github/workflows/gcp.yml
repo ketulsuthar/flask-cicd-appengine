@@ -56,3 +56,5 @@ jobs:
           uses: google-github-actions/deploy-appengine@v1
           with:
             deliverables: '.github/configs/app.yml'
+            project_id: ${{ secrets.GCP_PROJECT_ID }}
+            credentials: ${{ secrets.GCP_SA_KEY }}
