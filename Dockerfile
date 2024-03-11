@@ -1,19 +1,15 @@
 FROM python:3.10-slim-buster
 
-# Set the working directory in the container
-WORKDIR /app
+# Allow statements and log messages to immediately appear in the Knative logs
+ENV PYTHONUNBUFFERED True
 
-# Copy the current directory contents into the container at /app
-COPY . /app
+# Copy local code to the container image.
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
 
-# Install any needed packages specified in requirements.txt
+# Install production dependencies.
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 8080 available to the world outside this container
-EXPOSE 8080
-
-# Define environment variable
-ENV NAME World
-
-# Command to run the application
-CMD ["python", "app.py"]
+# Run the web service on container startup. 
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "main:app"]
