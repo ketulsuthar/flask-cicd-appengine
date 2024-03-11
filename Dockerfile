@@ -1,11 +1,19 @@
 FROM python:3.10-slim-buster
 
+# Set the working directory in the container
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-RUN pip3 install -r requirements.txt
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Make port 8080 available to the world outside this container
+EXPOSE 8080
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+# Define environment variable
+ENV NAME World
+
+# Command to run the application
+CMD ["python", "app.py"]
