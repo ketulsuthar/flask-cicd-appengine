@@ -34,7 +34,6 @@ jobs:
             gcloud auth configure-docker --quiet
             gcloud auth configure-docker northamerica-northeast2-docker.pkg.dev --quiet
             
-
         - name: Push Docker Image to Container Registry (GCR)
           env:
             GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
@@ -52,3 +51,8 @@ jobs:
               docker tag $IMAGE_NAME:latest northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
               docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
               docker push northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+
+        - name: Deploy
+          uses: google-github-actions/deploy-appengine@v1
+          with:
+            deliverables: '.github/configs/app.yml'
