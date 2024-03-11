@@ -57,4 +57,3 @@ jobs:
           with:
             deliverables: '.github/configs/app.yml'
             project_id: ${{ secrets.GCP_PROJECT_ID }}
-            credentials_json: '${{ secrets.GCP_SA_KEY }}'
