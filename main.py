@@ -9,9 +9,9 @@ def health():
     return "OK"
 
 
-@app.route("/hello")
-def hello_world():
-    return "Hello, World!"
+@app.route("/hello/<name>")
+def hello_world(name):
+    return f"Hello, {name}"
 
 
 if __name__ == '__main__':
