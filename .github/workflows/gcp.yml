@@ -8,7 +8,7 @@ jobs:
         runs-on: ubuntu-latest
         env:
             IMAGE_NAME: flask-cicd-demo
-            PROJECT_ID: prompta-alpha-one
+            PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
         steps:
         - name: Checkout the code
           uses: actions/checkout@v4
@@ -48,4 +48,4 @@ jobs:
             GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
           run: |
             echo "GIT_TAG=$GIT_TAG"
-            gcloud app deploy --image-url=northamerica-northeast2-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/images/$IMAGE_NAME:$GIT_TAG --quiet
+            gcloud app deploy --image-url=northamerica-northeast2-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG --quiet
